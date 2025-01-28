@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from 'dotenv';
 import { router as launchpadRouter } from './routes/launchpads.js';
 import './db/connection.js'; 
+import { getAllLaunchpads } from './services/launchpadService.js';
 
 
 dotenv.config();
@@ -18,6 +19,23 @@ app.use(express.json());
 app.use('/api/launchpads', launchpadRouter);
 
 
+app.get("/", async (request, response) => {
+  try {
+      const launchpads = await getAllLaunchpads();
+      response.json({
+          message: "Welcome to SpaceX API",
+          version: "1.0.0",
+          endpoints: {
+              launchpads: '/api/launchpads'
+          },
+          data: launchpads
+      });
+  } catch (err) {
+      console.error(err);
+      response.status(500).send('Internal Server Error');
+  }
+});
+  
    // PORT  
    const startServer = async () => {
       try {
