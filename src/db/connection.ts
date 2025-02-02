@@ -2,8 +2,7 @@ import pg from 'pg';
 import { dbConfig } from './config.js';
 
 const { Pool } = pg;
-
-export const pool = new Pool(dbConfig);
+const pool = new Pool(dbConfig);
 
 // Test database connection
 pool.query('SELECT NOW()', (err, res) => {
@@ -15,5 +14,5 @@ pool.query('SELECT NOW()', (err, res) => {
 });
 
 export default {
-  query: (text, params) => pool.query(text, params),
+  query: (text: string, params: any[]) => pool.query(text, params),
 };

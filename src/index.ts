@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import dotenv from 'dotenv';
 import { router as launchpadRouter } from './routes/launchpads.js';
 import './db/connection.js'; 
@@ -18,8 +18,7 @@ app.use(express.json());
 // Routes
 app.use('/api/launchpads', launchpadRouter);
 
-
-app.get("/", async (request, response) => {
+app.get("/", async (request: Request, response: Response) => {
   try {
       const launchpads = await getAllLaunchpads();
       response.json({
@@ -38,14 +37,14 @@ app.get("/", async (request, response) => {
   
    // PORT  
    const startServer = async () => {
-      try {
-        app.listen(PORT, () => {
-          console.log(`🚀 SpaceX Launchpads API is running on port ${PORT}`);
-        });
-      } catch (error) {
-        console.error('Failed to start server:', error);
-        process.exit(1);
-      }
-    };
-    
+    try {
+      app.listen(PORT, () => {
+        console.log(`🚀 SpaceX Launchpads API is running on port ${PORT}`);
+      });
+    } catch (error) {
+      console.error('Failed to start server:', error);
+      process.exit(1);
+    }
+  };
+  
 startServer();
