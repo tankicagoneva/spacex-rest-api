@@ -1,7 +1,9 @@
 import express from "express";
 
-import { getAllLaunchpads, getLaunchpadById  } from "../controllers/launchpadController.js"; 
-
+import {
+  getAllLaunchpads,
+  getLaunchpadById,
+} from "../controllers/launchpadController.js";
 
 export const router = express.Router();
 
