@@ -1,4 +1,4 @@
-import { RequestHandler } from "express";
+import { RequestHandler, Request, Response, NextFunction } from "express";
 import * as launchpadService from "../services/launchpadService.js";
 
 
@@ -14,7 +14,7 @@ import * as launchpadService from "../services/launchpadService.js";
  * 
  * @throws Passes any errors to the next function.
  */
-export const getAllLaunchpads: RequestHandler = async (req, res, next) => {
+export const getAllLaunchpads: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const launchpads = await launchpadService.getAllLaunchpads();
     res.status(200).json(launchpads);
@@ -35,7 +35,7 @@ export const getAllLaunchpads: RequestHandler = async (req, res, next) => {
  * 
  * @throws Will pass any errors to the next function.
  */
-export const getLaunchpadById: RequestHandler = async (req, res, next) => {
+export const getLaunchpadById: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const launchpad = await launchpadService.getLaunchpadById(req.params.id);
     if (!launchpad) {
