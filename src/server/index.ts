@@ -1,7 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import { router as launchpadRouter } from "../routes/launchpads.js";
-import "../db/connection.js";
+import { router as launchpadRouter } from "../routes/launchpads.ts";
 
 dotenv.config();
 
