@@ -1,8 +1,7 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import dotenv from "dotenv";
 import { router as launchpadRouter } from "../routes/launchpads.js";
 import "../db/connection.js";
-import { getAllLaunchpads } from "../services/launchpadService.js";
 
 dotenv.config();
 
@@ -14,7 +13,6 @@ app.use(express.json());
 
 // Routes
 app.use("/api/launchpads", launchpadRouter);
-
 
 // PORT
 const startServer = async () => {

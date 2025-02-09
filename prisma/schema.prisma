@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model launchpads {
+  id               String   @id
+  name             String
+  full_name        String
+  locality         String?
+  region           String[]
+  latitude         Decimal? @db.Decimal
+  longitude        Decimal? @db.Decimal
+  launch_attempts  Int?
+  launch_successes Int?
+  rockets          String[]
+  timezone         String?
+  status           String?
+  details          String?
+  images           Json?    @db.Json
+  launches         String[]
+}

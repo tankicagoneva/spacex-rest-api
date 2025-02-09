@@ -49,3 +49,63 @@ export const getLaunchpadById: RequestHandler = async (req: Request, res: Respon
     next(error);
   }
 };
+
+/**
+ * Handles the request to create a new launchpad.
+ * 
+ * @param req - The request object, containing the launchpad data in the body.
+ * @param res - The response object, used to send back the created launchpad data or an error message.
+ * @param next - The next  function in the stack.
+ * 
+ * @returns A JSON response with the created launchpad data.
+ * 
+ * @throws Will pass any errors to the next function.
+ */
+export const createLaunchpad: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const launchpad = await launchpadService.createLaunchpad(req.body);
+    res.status(201).json(launchpad);
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * Handles the request to update a launchpad by its ID.
+ * 
+ * @param req - The request object, containing the launchpad ID in the parameters and the updated data in the body.
+ * @param res - The response object, used to send back the updated launchpad data or an error message.
+ * @param next - The next middleware function in the stack.
+ * 
+ * @returns A JSON response with the updated launchpad data.
+ * 
+ * @throws Will pass any errors to the next function.
+ */
+export const updateLaunchpad: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const launchpad = await launchpadService.updateLaunchpad(req.params.id, req.body);
+    res.status(200).json(launchpad);
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * Handles the request to delete a launchpad by its ID.
+ * 
+ * @param req - The request object, containing the launchpad ID in the parameters.
+ * @param res - The response object, used to send back a success message or an error message.
+ * @param next - The next  function in the stack.
+ * 
+ * @returns A JSON response with a success message.
+ * 
+ * @throws Will pass any errors to the next function.
+ */ 
+export const deleteLaunchpad: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    await launchpadService.deleteLaunchpad(req.params.id);
+    res.status(200).json({ message: `Launchpad with id ${req.params.id} deleted` });
+  } catch (error) {
+    next(error);
+  }
+};
