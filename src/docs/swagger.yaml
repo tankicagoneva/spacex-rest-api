@@ -1,0 +1,25 @@
+openapi: 3.0.0
+info:
+  title: Launchpad API
+  description: API for managing space launchpads
+  version: 1.0.0
+
+paths:
+  /launchpads:
+    get:
+      summary: Get all launchpads
+      operationId: getAllLaunchpads
+      tags:
+        - Launchpads
+      responses:
+        "200":
+          description: A list of launchpads
+          content:
+            application/json:
+              schema:
+                type: array
+                
+components:
+  schemas:
+    Launchpad:
+      $ref: "../prisma/schema.prisma#/model/launchpads"
