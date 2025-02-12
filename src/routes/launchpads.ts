@@ -6,7 +6,7 @@ import {
   createLaunchpad,
   updateLaunchpad,
   deleteLaunchpad,
-} from "../controllers/launchpadController.js";
+} from "../controllers/launchpadController.ts";
 
 export const router = express.Router();
 

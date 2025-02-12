@@ -1,5 +1,5 @@
 import { RequestHandler, Request, Response, NextFunction } from "express";
-import * as launchpadService from "../services/launchpadService.js";
+import * as launchpadService from "../services/launchpadService.ts";
 
 
 
