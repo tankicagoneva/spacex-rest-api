@@ -1,24 +1,22 @@
-import request from "supertest";
-import { app, startServer } from "../src/server/index.ts";
+import request from "supertest"
+import { app } from "../src/server/index.ts"
 
-import { describe, it, expect, afterAll, beforeAll } from "vitest";
+vi.mock('../src/controllers/launchpadController.ts', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('../src/controllers/launchpadController.ts')>()),
+  getAllLaunchpads: vi.fn().mockImplementation(async (req: Request, res: Response, next: NextFunction) => { res.status(200).json({ something: 'value' }) })
+}))
+
+
+import { vi, describe, it, expect } from "vitest"
+import { NextFunction, Response } from "express"
+
 
 describe("Server Test", () => {
-  let server;
-
-  beforeAll(async () => {
-    process.env.PORT = "3001";
-    server = await startServer();
-  });
-
-  afterAll(async () => {
-    if (server) {
-      server.close();
-    }
-  });
 
   it("should return 200", async () => {
-    const response = await request(app).get("/api/launchpads");
-    expect(response.status).toBe(200);
-  });
-});
+    const response = await request(app).get("/api/launchpads")
+
+    expect(response.status).toBe(200)
+    expect(response.body).toEqual({ something: 'value' })
+  })
+})
