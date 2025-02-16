@@ -1,8 +1,8 @@
 import request from "supertest"
-import { app } from "../src/server/index.ts"
+import { app } from "./index.ts"
 
-vi.mock('../src/controllers/launchpadController.ts', async (importOriginal) => ({
-  ...(await importOriginal<typeof import('../src/controllers/launchpadController.ts')>()),
+vi.mock('../controllers/launchpadController.ts', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('../controllers/launchpadController.ts')>()),
   getAllLaunchpads: vi.fn().mockImplementation(async (req: Request, res: Response, next: NextFunction) => { res.status(200).json({ something: 'value' }) })
 }))
 

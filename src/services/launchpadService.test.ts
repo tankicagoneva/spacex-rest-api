@@ -5,10 +5,10 @@ import {
   createLaunchpad,
   updateLaunchpad,
   deleteLaunchpad,
-} from "../src/services/launchpadService"
-import prisma from "../src/db/client"
+} from "./launchpadService.ts"
+import prisma from "../db/client.ts"
 
-vi.mock("../src/db/client", () => {
+vi.mock("../db/client", () => {
   return {
     default: {
       launchpads: {
