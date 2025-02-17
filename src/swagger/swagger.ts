@@ -23,7 +23,10 @@ const swaggerOptions = {
   ],
 };
 
-const swaggerSpecs = swaggerJSDoc(swaggerOptions);
+const swaggerSpec = swaggerJSDoc(swaggerOptions);
 
-export const swaggerDocs = swaggerUi.setup(swaggerSpecs);
+export const swaggerDocs = swaggerUi.setup(swaggerSpec, {
+  swaggerOptions: {
+    supportedSubmitMethods: ["get", "post", "put", "delete"],
+  },})
 export const swaggerServe = swaggerUi.serve;

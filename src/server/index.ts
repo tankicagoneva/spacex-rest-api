@@ -1,6 +1,8 @@
 import express from "express"
 import dotenv from "dotenv"
 import { router as launchpadRouter } from "../routes/launchpads.ts"
+import { swaggerServe, swaggerDocs } from '../swagger/swagger.ts';
+
 
 
 dotenv.config()
@@ -10,6 +12,8 @@ const PORT = process.env.PORT || 3000
 
 // middleware
 app.use(express.json())
+
+app.use('/api-docs', swaggerServe, swaggerDocs);
 
 // Routes
 app.use("/api/launchpads", launchpadRouter)

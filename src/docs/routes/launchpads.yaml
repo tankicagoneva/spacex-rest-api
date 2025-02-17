@@ -1,0 +1,116 @@
+openapi: 3.0.0
+info:
+  title: Launchpad API
+  description: API for managing space launchpads
+  version: 1.0.0
+
+paths:
+  /launchpads:
+    get:
+      summary: Get all launchpads
+      operationId: getAllLaunchpads
+      tags:
+        - Launchpads
+      responses:
+        "200":
+          description: A list of launchpads
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Launchpad"
+    post:
+      summary: Create a new launchpad
+      operationId: createLaunchpad
+      tags:
+        - Launchpads
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Launchpad"
+      responses:
+        "201":
+          description: Launchpad created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Launchpad"
+        "400":
+          description: Invalid request payload
+
+  /launchpads/{id}:
+    get:
+      summary: Get a specific launchpad by ID
+      operationId: getLaunchpadById
+      tags:
+        - Launchpads
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "5e9e4501f5090910d4566f83"
+          description: The ID of the launchpad to retrieve
+      responses:
+        "200":
+          description: Launchpad details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Launchpad"
+        "404":
+          description: Launchpad not found
+
+    put:
+      summary: Update a launchpad by ID
+      operationId: updateLaunchpad
+      tags:
+        - Launchpads
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "5e9e4501f5090910d4566f83"
+          description: The ID of the launchpad to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Launchpad"
+      responses:
+        "200":
+          description: Launchpad updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Launchpad"
+        "400":
+          description: Invalid request payload
+        "404":
+          description: Launchpad not found
+
+    delete:
+      summary: Delete a launchpad by ID
+      operationId: deleteLaunchpad
+      tags:
+        - Launchpads
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "5e9e4501f5090910d4566f83"
+          description: The ID of the launchpad to delete
+      responses:
+        "204":
+          description: Launchpad deleted successfully
+        "404":
+          description: Launchpad not found
