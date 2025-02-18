@@ -7,11 +7,13 @@ import {
   updateLaunchpad,
   deleteLaunchpad,
 } from "../controllers/launchpadController.ts";
+import { validateRequest } from "../middleware/validateRequest.ts";
+import { createLaunchpadValidator, deleteLaunchpadValidator, updateLaunchpadValidator, validateIdParam } from "../validators/launchpadsValidators.ts";
 
 export const router = express.Router();
 
 router.get("/", getAllLaunchpads);
-router.get("/:id", getLaunchpadById);
-router.post("/", createLaunchpad);
-router.put("/:id", updateLaunchpad);
-router.delete("/:id", deleteLaunchpad);
+router.get("/:id", validateRequest(validateIdParam), getLaunchpadById);
+router.post("/", validateRequest(createLaunchpadValidator), createLaunchpad);
+router.put("/:id", validateRequest(updateLaunchpadValidator), updateLaunchpad);
+router.delete("/:id", validateRequest(validateIdParam), deleteLaunchpad);
