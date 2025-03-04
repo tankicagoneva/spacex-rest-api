@@ -4,11 +4,10 @@ info:
   description: API for managing space launchpads
   version: 1.0.0
 
-servers: 
-- url: "http://localhost:3000"
-  description: "Development server"
-      
-    
+servers:
+  - url: "http://localhost:3000"
+    description: "Development server"
+
 paths:
   /launchpads:
     get:
@@ -119,8 +118,6 @@ paths:
           description: Launchpad deleted successfully
         "404":
           description: Launchpad not found
-
-
 
 components:
   schemas:

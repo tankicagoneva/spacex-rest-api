@@ -1,6 +1,6 @@
 import prisma from "../db/client.ts";
 import { LatLng, LaunchpadStatus } from "../schema/launchpadSchemas.ts";
-import { calculateDistance } from '../utils/geoLocation.ts';
+import { calculateDistance } from "../utils/geoLocation.ts";
 
 /**
  * Retrieves all launchpads from the database and filters them by status if provided.
@@ -10,14 +10,13 @@ import { calculateDistance } from '../utils/geoLocation.ts';
  */
 export const getAllLaunchpads = async (launchpadStatus?: LaunchpadStatus) => {
   return prisma.launchpads.findMany({
-    where: launchpadStatus ? { status: launchpadStatus } : undefined,  
+    where: launchpadStatus ? { status: launchpadStatus } : undefined,
     orderBy: {
       id: "asc",
     },
   });
 };
 
- 
 /**
  * Retrieves a launchpad by its ID.
  *
@@ -82,24 +81,22 @@ export const deleteLaunchpad = async (id: string) => {
  */
 
 export const getLaunchpadsByClosest = async (latLng: LatLng) => {
-  
   const userLatitude = parseFloat(latLng.latitude);
   const userLongitude = parseFloat(latLng.longitude);
-  
-  const launchpads  = await prisma.launchpads.findMany();
 
-  const closestLaunchpads = launchpads.map(launchpad => ({
+  const launchpads = await prisma.launchpads.findMany();
+
+  const closestLaunchpads = launchpads.map((launchpad) => ({
     ...launchpad,
     distance: calculateDistance(
       userLatitude,
       userLongitude,
       Number(launchpad.latitude),
-      Number(launchpad.longitude)
+      Number(launchpad.longitude),
     ),
   }));
 
-  return closestLaunchpads.reduce((closest, current) => 
-  (closest.distance <= current.distance) ? closest : current
-);
-
-}
+  return closestLaunchpads.reduce((closest, current) =>
+    closest.distance <= current.distance ? closest : current,
+  );
+};
