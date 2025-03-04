@@ -1,7 +1,6 @@
 import { RequestHandler, Request, Response, NextFunction } from "express";
 import * as launchpadService from "../services/launchpadService.ts";
-
-
+import { latLngSchema, statusSchema } from "../schema/launchpadSchemas.ts";
 
 /**
  * Retrieves all launchpads and sends them in the response.
@@ -15,14 +14,18 @@ import * as launchpadService from "../services/launchpadService.ts";
  * @throws Passes any errors to the next function.
  */
 export const getAllLaunchpads: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+
   try {
-    const launchpads = await launchpadService.getAllLaunchpads();
+    const statusParseResult = statusSchema.safeParse(req.query.status);
+
+    const launchpads = await launchpadService.getAllLaunchpads(
+      statusParseResult.success ? statusParseResult.data : undefined
+    );
     res.status(200).json(launchpads);
   } catch (error) {
     next(error);
   }
 };
-
 
 /**
  * Handles the request to get a launchpad by its ID.
@@ -109,3 +112,23 @@ export const deleteLaunchpad: RequestHandler = async (req: Request, res: Respons
     next(error);
   }
 };
+
+
+export const getLaunchpadsByClosest: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+      const coordinates = latLngSchema.safeParse({
+        latitude: req.query.latitude,
+        longitude: req.query.longitude,
+      });
+
+     if(!coordinates.success) {
+       res.status(400).json({  message: "Invalid coordinates", error: coordinates.error.message });
+       return;
+    }
+    
+    const closestLaunchpads  = await launchpadService.getLaunchpadsByClosest(coordinates.data);
+    res.status(200).json(closestLaunchpads);
+  } catch (error) {
+    next(error);
+  }
+}
