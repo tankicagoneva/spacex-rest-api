@@ -1,6 +1,6 @@
 import { RequestHandler, Request, Response, NextFunction } from "express";
 import * as launchpadService from "../services/launchpadService.ts";
-import { latLngSchema, statusSchema } from "../schema/launchpadSchemas.ts";
+import { getAllLaunchpadsSchema, latLngSchema } from "../schema/launchpadSchemas.ts";
 
 /**
  * Retrieves all launchpads and sends them in the response.
@@ -19,7 +19,17 @@ export const getAllLaunchpads: RequestHandler = async (
   next: NextFunction,
 ) => {
   try {
-    const statusParseResult = statusSchema.safeParse(req.query.status);
+    const statusParseResult  = getAllLaunchpadsSchema.safeParse(req.query.status);
+
+    if (!statusParseResult.success) {
+      res
+        .status(400)
+        .json({
+          message: "Invalid status",
+          error: statusParseResult.error.message,
+        });
+      return;
+    }
 
     const launchpads = await launchpadService.getAllLaunchpads(
       statusParseResult.success ? statusParseResult.data : undefined,
@@ -137,16 +147,24 @@ export const deleteLaunchpad: RequestHandler = async (
   }
 };
 
+/**
+ * Controller handler for getting launchpads sorted by closest distance to given coordinates.
+ * 
+ * @param req - Express request object containing query parameters for latitude and longitude
+ * @param res - Express response object used to send back HTTP response
+ * @param next - Express NextFunction for error handling 
+ * 
+ * @returns Promise that resolves when the response has been sent
+ * @throws Forwards any errors to Express error handling middleware
+ * 
+ */
 export const getLaunchpadsByClosest: RequestHandler = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
   try {
-    const coordinates = latLngSchema.safeParse({
-      latitude: req.query.latitude,
-      longitude: req.query.longitude,
-    });
+    const coordinates = latLngSchema.safeParse(req.query);
 
     if (!coordinates.success) {
       res
