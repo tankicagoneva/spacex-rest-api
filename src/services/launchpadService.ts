@@ -1,16 +1,16 @@
 import prisma from "../db/client.ts";
-import { LatLng, LaunchpadStatus } from "../schema/launchpadSchemas.ts";
+import { LatLng, getAllLaunchpadsSchema } from "../schema/launchpadSchemas.ts";
 import { calculateDistance } from "../utils/geoLocation.ts";
 
 /**
  * Retrieves all launchpads from the database and filters them by status if provided.
  *
  * @returns A list of all launchpads.
- * @param launchpadStatus - The status to filter the launchpads by.
+ * @param getAllLaunchpads - The status to filter the launchpads by.
  */
-export const getAllLaunchpads = async (launchpadStatus?: LaunchpadStatus) => {
+export const getAllLaunchpads = async (getAllLaunchpads?: getAllLaunchpadsSchema) => {
   return prisma.launchpads.findMany({
-    where: launchpadStatus ? { status: launchpadStatus } : undefined,
+    where: getAllLaunchpads ? { status: getAllLaunchpads.status } : undefined,
     orderBy: {
       id: "asc",
     },
