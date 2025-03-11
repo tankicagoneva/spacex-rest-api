@@ -19,7 +19,7 @@ export const getAllLaunchpads: RequestHandler = async (
   next: NextFunction,
 ) => {
   try {
-    const statusParseResult  = getAllLaunchpadsSchema.safeParse(req.query.status);
+    const statusParseResult  = getAllLaunchpadsSchema.safeParse(req.query);
 
     if (!statusParseResult.success) {
       res
@@ -171,7 +171,7 @@ export const getLaunchpadsByClosest: RequestHandler = async (
         .status(400)
         .json({
           message: "Invalid coordinates",
-          error: coordinates.error.message,
+          error: JSON.stringify(coordinates.error.errors),
         });
       return;
     }
