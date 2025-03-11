@@ -9,7 +9,7 @@ import {
 } from "../launchpadController.ts";
 import * as launchpadService from "../../services/launchpadService.ts";
 
-vi.mock("../services/launchpadService.ts");
+vi.mock("../../services/launchpadService.ts");
 
 describe("launchpadController", () => {
   let mockReq: Partial<Request>;
