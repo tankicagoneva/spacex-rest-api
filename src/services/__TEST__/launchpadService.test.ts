@@ -5,8 +5,8 @@ import {
   createLaunchpad,
   updateLaunchpad,
   deleteLaunchpad,
-} from "./launchpadService.ts"
-import prisma from "../db/client.ts"
+} from "../launchpadService.ts"
+import prisma from "../../db/client.ts"
 
 vi.mock("../db/client", () => {
   return {

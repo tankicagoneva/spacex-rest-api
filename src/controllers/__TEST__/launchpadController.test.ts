@@ -6,8 +6,8 @@ import {
   updateLaunchpad,
   deleteLaunchpad,
   getAllLaunchpads,
-} from "./launchpadController.ts";
-import * as launchpadService from "../services/launchpadService.ts";
+} from "../launchpadController.ts";
+import * as launchpadService from "../../services/launchpadService.ts";
 
 vi.mock("../services/launchpadService.ts");
 
