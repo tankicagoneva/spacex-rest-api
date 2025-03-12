@@ -1,5 +1,5 @@
 import prisma from "../db/client.ts";
-import { LatLng, getAllLaunchpadsSchema } from "../schema/launchpadSchemas.ts";
+import { getClosestSchema, getAllLaunchpadsSchema } from "../schema/launchpadSchemas.ts";
 import { calculateDistance } from "../utils/geoLocation.ts";
 
 /**
@@ -76,13 +76,13 @@ export const deleteLaunchpad = async (id: string) => {
 /**
  * Retrieves the closest launchpad to the user's location.
  *
- * @param latLng - The user's location.
+ * @param getClosestSchema - The user's location.
  * @returns The closest launchpad to the user.
  */
 
-export const getLaunchpadsByClosest = async (latLng: LatLng) => {
-  const userLatitude = parseFloat(latLng.latitude);
-  const userLongitude = parseFloat(latLng.longitude);
+export const getLaunchpadsByClosest = async (getClosestSchema: getClosestSchema) => {
+  const userLatitude = parseFloat(getClosestSchema.latitude);
+  const userLongitude = parseFloat(getClosestSchema.longitude);
 
   const launchpads = await prisma.launchpads.findMany();
 

@@ -5,7 +5,7 @@ export const getAllLaunchpadsSchema = z.object({
 });
 export type getAllLaunchpadsSchema = z.infer<typeof getAllLaunchpadsSchema>;
 
-export const latLngSchema = z.object({
+export const getClosestSchema  = z.object({
   latitude: z.string().refine(
     (val) => {
       const num = parseFloat(val);
@@ -22,4 +22,4 @@ export const latLngSchema = z.object({
   ),
 });
 
-export type LatLng = z.infer<typeof latLngSchema>;
+export type getClosestSchema = z.infer<typeof getClosestSchema >;

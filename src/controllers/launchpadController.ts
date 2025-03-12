@@ -1,6 +1,6 @@
 import { RequestHandler, Request, Response, NextFunction } from "express";
 import * as launchpadService from "../services/launchpadService.ts";
-import { getAllLaunchpadsSchema, latLngSchema } from "../schema/launchpadSchemas.ts";
+import { getAllLaunchpadsSchema, getClosestSchema } from "../schema/launchpadSchemas.ts";
 
 /**
  * Retrieves all launchpads and sends them in the response.
@@ -164,7 +164,7 @@ export const getLaunchpadsByClosest: RequestHandler = async (
   next: NextFunction,
 ) => {
   try {
-    const coordinates = latLngSchema.safeParse(req.query);
+    const coordinates = getClosestSchema.safeParse(req.query);
 
     if (!coordinates.success) {
       res
