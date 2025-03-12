@@ -6,6 +6,7 @@ import {
   updateLaunchpad,
   deleteLaunchpad,
   getAllLaunchpads,
+  getLaunchpadsByClosest,
 } from "../launchpadController.ts";
 import * as launchpadService from "../../services/launchpadService.ts";
 
@@ -28,6 +29,7 @@ describe("launchpadController", () => {
 
   describe("getAllLaunchpads", () => {
     it("should return all launchpads", async () => {
+      mockReq.query = {status: 'active'};
       const mockLaunchpads = [
         {
           id: "pad-1",
@@ -76,6 +78,8 @@ describe("launchpadController", () => {
     });
 
     it("should handle errors", async () => {
+      mockReq.query = {status: 'active'};
+
       const error = new Error("Database error");
 
       vi.mocked(launchpadService.getAllLaunchpads).mockRejectedValue(error);
@@ -294,5 +298,110 @@ describe("launchpadController", () => {
         expect(mockNext).toHaveBeenCalledWith(new Error("Database error"));
       });
     });
+  });
+
+  describe("getLaunchpadsByClosest", () => {
+    it("should return launchpads sorted by closest distance to given coordinates", async () => {
+      mockReq.query = { latitude: '23.435', longitude: '45.234' };
+      const mockClosestLaunchpads = [
+        {
+          id: "pad-1",
+          status: "active",
+          name: "Test Pad",
+          full_name: "Test Launch Pad",
+          locality: "Test Locality",
+          region: ["Test Region"],
+          latitude: 23.435,
+          longitude: 45.234,
+          launch_attempts: null,
+          launch_successes: null,
+          rockets: [],
+          launches: [],
+          timezone: "UTC",
+          details: "Test details",
+          images: [],
+        },
+        {
+          id: "pad-2",
+          status: "active",
+          name: "Test Pad 2",
+          full_name: "Test Launch Pad 2",
+          locality: "Test Locality",
+          region: ["Test Region"],
+          latitude: 28.5728,
+          longitude: 77.234,
+          launch_attempts: null,
+          launch_successes: null,
+          rockets: [],
+          launches: [],
+          timezone: "UTC",
+          details: "Test details",
+          images: [],
+        },
+      ];
+
+      vi.mocked(launchpadService.getLaunchpadsByClosest).mockResolvedValue(
+        mockClosestLaunchpads,
+      );
+
+      await getLaunchpadsByClosest(
+        mockReq as Request,
+        mockRes as Response,
+        mockNext,
+      );
+
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.json).toHaveBeenCalledWith(mockClosestLaunchpads);
+    });
+
+    it("should handle errors", async () => {
+      mockReq.query = { latitude: '23.435', longitude: '45.234' };
+      const error = new Error("Database error");
+
+      vi.mocked(launchpadService.getLaunchpadsByClosest).mockRejectedValue(
+        error,
+      );
+
+      await getLaunchpadsByClosest(
+        mockReq as Request,
+        mockRes as Response,
+        mockNext,
+      );
+
+      expect(mockNext).toHaveBeenCalledWith(new Error("Database error"));
+    });
+
+    it("should return 400 if latitude or longitude is missing", async () => {
+      mockReq.query = { latitude: '23.435' };
+
+      await getLaunchpadsByClosest(
+        mockReq as Request,
+        mockRes as Response,
+        mockNext,
+      );
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        message: "Invalid coordinates",
+        error: '[{"code":"invalid_type","expected":"string","received":"undefined","path":["longitude"],"message":"Required"}]',
+       });
+    });
+
+    it("should return 400 if latitude or longitude is invalid", async () => {
+      mockReq.query = { latitude: '159.89', longitude: '230.56' };
+
+      await getLaunchpadsByClosest(
+        mockReq as Request,
+        mockRes as Response,
+        mockNext,
+      );
+
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        message: "Invalid coordinates",
+        error: '[{"code":"custom","message":"Invalid latitude","path":["latitude"]},{"code":"custom","message":"Invalid longitude","path":["longitude"]}]',
+      });
+    });
+
   });
 });

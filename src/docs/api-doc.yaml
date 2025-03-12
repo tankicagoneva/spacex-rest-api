@@ -4,16 +4,28 @@ info:
   description: API for managing space launchpads
   version: 1.0.0
 
-servers: 
-- url: "http://localhost:3000"
-  description: "Development server"
-      
-    
+servers:
+  - url: "http://localhost:3000"
+    description: "Development server"
+
 paths:
   /launchpads:
     get:
       summary: Get all launchpads
       operationId: getAllLaunchpads
+      description: Retrieve a list of launchpads, optionally filtered by status.
+      parameters:
+        - name: status
+          in: query
+          description: The status of the launchpad (e.g., 'active', 'inactive').
+          required: false
+          schema:
+            type: string
+            enum:
+              - active
+              - retired
+              - under-construction
+            default: active
       tags:
         - Launchpads
       responses:
@@ -25,6 +37,42 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Launchpad"
+        "400":
+          description: Bad request if invalid status is passed.
+  /closest:
+    get:
+      summary: Get the closest launchpad
+      description: Returns the closest launchpad based on user latitude and longitude.
+      parameters:
+        - name: latitude
+          in: query
+          required: true
+          schema:
+            type: number
+            format: float
+            minimum: -90
+            maximum: 90
+          description: Latitude of the location (between -90 and 90).
+        - name: longitude
+          in: query
+          required: true
+          schema:
+            type: number
+            format: float
+            minimum: -180
+            maximum: 180
+          description: Longitude of the location (between -180 and 180).
+      responses:
+        "200":
+          description: Successfully retrieved the closest launchpad.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Launchpad"
+        "400":
+          description: Invalid coordinates.
+        "500":
+          description: Server error.
     post:
       summary: Create a new launchpad
       operationId: createLaunchpad
@@ -119,8 +167,6 @@ paths:
           description: Launchpad deleted successfully
         "404":
           description: Launchpad not found
-
-
 
 components:
   schemas:
