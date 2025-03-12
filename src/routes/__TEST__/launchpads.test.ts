@@ -1,11 +1,17 @@
-import request from "supertest";
-import { app } from "../server/index.ts";
-import { vi, describe, it, expect } from "vitest";
-import { NextFunction, Response } from "express";
+import request from "supertest"
+import { app } from "../../server/index.ts"
+import { vi, describe, it, expect } from "vitest"
+import { NextFunction, Response } from "express"
+
+vi.mock('../../controllers/launchpadController.ts', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('../../controllers/launchpadController.ts')>()),
+  getAllLaunchpads: vi.fn().mockImplementation(async (req: Request, res: Response, next: NextFunction) => { res.status(200).json([{ id: '5e9e4501f5090910d4566f83' }]) }),
+  getLaunchpadById: vi.fn().mockImplementation(async (req: Request, res: Response, next: NextFunction) => { res.status(200).json({ id: '5e9e4501f5090910d4566f83' }) })
+}))
 
 vi.mock("../controllers/launchpadController.ts", async (importOriginal) => ({
   ...(await importOriginal<
-    typeof import("../controllers/launchpadController.ts")
+    typeof import("../../controllers/launchpadController.ts")
   >()),
   getAllLaunchpads: vi
     .fn()

@@ -1,22 +1,9 @@
-import {
-  beforeEach,
-  expect,
-  it,
-  describe,
-  vi,
-  Mock,
-  TestFunction,
-} from "vitest";
-import {
-  getAllLaunchpads,
-  getLaunchpadById,
-  createLaunchpad,
-  updateLaunchpad,
-  deleteLaunchpad,
-} from "./launchpadService.ts";
-import prisma from "../db/client.ts";
+import { beforeEach, expect, it, describe, vi, Mock, TestFunction } from "vitest"
 
-vi.mock("../db/client", () => {
+import prisma from "../../db/client.ts"
+import { createLaunchpad, deleteLaunchpad, getAllLaunchpads, getLaunchpadById, updateLaunchpad } from "../launchpadService.ts"
+
+vi.mock("../../db/client", () => {
   return {
     default: {
       launchpads: {

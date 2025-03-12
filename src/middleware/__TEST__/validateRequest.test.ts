@@ -1,12 +1,10 @@
 import { describe, it, expect, Mock, vi, beforeEach } from "vitest";
 import { NextFunction, Request, Response } from "express";
-import {
-  createLaunchpadsSchema,
-  getLaunchpadsByIdSchema,
-} from "../validators/launchpadsValidators.ts";
 
-import { validateRequest } from "../middleware/validateRequest.ts";
+
 import { AnyZodObject, ZodError } from "zod";
+import { createLaunchpadsSchema, getLaunchpadsByIdSchema } from "../../validators/launchpadsValidators.ts";
+import { validateRequest } from "../validateRequest.ts";
 
 describe("Validate Request Middleware", () => {
   beforeEach(() => {

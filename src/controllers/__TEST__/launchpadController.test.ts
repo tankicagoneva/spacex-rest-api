@@ -7,10 +7,10 @@ import {
   deleteLaunchpad,
   getAllLaunchpads,
   getLaunchpadsByClosest,
-} from "./launchpadController.ts";
-import * as launchpadService from "../services/launchpadService.ts";
+} from "../launchpadController.ts";
+import * as launchpadService from "../../services/launchpadService.ts";
 
-vi.mock("../services/launchpadService.ts");
+vi.mock("../../services/launchpadService.ts");
 
 describe("launchpadController", () => {
   let mockReq: Partial<Request>;
