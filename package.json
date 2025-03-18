@@ -9,12 +9,13 @@
   "scripts": {
     "start": "node dist/server/index.js",
     "dev": "nodemon",
-    "build": "tsc",
+    "build": "prisma generate && tsc",
     "format": "prettier --write .",
     "serve": "node dist/server/index.js",
     "test": "vitest",
     "coverage": "vitest run --coverage",
-    "seed": "npx prisma db seed"
+    "seed": "npx prisma db seed",
+    "netlify:dev": "netlify dev"
   },
   "author": "",
   "license": "ISC",
@@ -29,6 +30,7 @@
     "js-yaml": "^4.1.0",
     "path": "^0.12.7",
     "pg": "^8.13.1",
+    "serverless-http": "^3.2.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
     "tsx": "^4.19.2",
@@ -38,11 +40,12 @@
   "devDependencies": {
     "@types/express": "^5.0.0",
     "@types/js-yaml": "^4.0.9",
-    "@types/node": "^22.13.0",
+    "@types/node": "^22.13.10",
     "@types/pg": "^8.11.11",
     "@types/supertest": "^6.0.2",
     "@types/uuid": "^10.0.0",
     "@vitest/coverage-v8": "^3.0.5",
+    "netlify-cli": "^19.0.2",
     "nodemon": "^3.1.9",
     "prettier": "^3.4.2",
     "supertest": "^7.0.0",
