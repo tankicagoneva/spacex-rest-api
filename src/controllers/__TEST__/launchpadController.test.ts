@@ -9,6 +9,7 @@ import {
   getLaunchpadsByClosest,
 } from "../launchpadController.ts";
 import * as launchpadService from "../../services/launchpadService.ts";
+import { Decimal } from "@prisma/client/runtime/library";
 
 vi.mock("../../services/launchpadService.ts");
 
@@ -303,7 +304,7 @@ describe("launchpadController", () => {
   describe("getLaunchpadsByClosest", () => {
     it("should return launchpads sorted by closest distance to given coordinates", async () => {
       mockReq.query = { latitude: '23.435', longitude: '45.234' };
-      const mockClosestLaunchpads = [
+      const mockClosestLaunchpads = 
         {
           id: "pad-1",
           status: "active",
@@ -311,8 +312,8 @@ describe("launchpadController", () => {
           full_name: "Test Launch Pad",
           locality: "Test Locality",
           region: ["Test Region"],
-          latitude: 23.435,
-          longitude: 45.234,
+          latitude: new Decimal(23.435),
+          longitude: new Decimal(45.234),
           launch_attempts: null,
           launch_successes: null,
           rockets: [],
@@ -320,25 +321,10 @@ describe("launchpadController", () => {
           timezone: "UTC",
           details: "Test details",
           images: [],
-        },
-        {
-          id: "pad-2",
-          status: "active",
-          name: "Test Pad 2",
-          full_name: "Test Launch Pad 2",
-          locality: "Test Locality",
-          region: ["Test Region"],
-          latitude: 28.5728,
-          longitude: 77.234,
-          launch_attempts: null,
-          launch_successes: null,
-          rockets: [],
-          launches: [],
-          timezone: "UTC",
-          details: "Test details",
-          images: [],
-        },
-      ];
+          distance: 0,
+        };
+        
+      
 
       vi.mocked(launchpadService.getLaunchpadsByClosest).mockResolvedValue(
         mockClosestLaunchpads,
