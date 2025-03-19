@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node dist/server/index.js",
     "dev": "nodemon",
-    "build": "npx prisma generate && npx prisma migrate deploy && tsc",
+    "build": "esbuild --bundle ./src/server/index.ts --platform=node",
     "format": "prettier --write .",
     "serve": "node dist/server/index.js",
     "test": "vitest",
@@ -26,6 +26,7 @@
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.7",
     "dotenv": "^16.4.7",
+    "esbuild": "^0.25.1",
     "express": "^4.21.2",
     "fs": "^0.0.1-security",
     "js-yaml": "^4.1.0",

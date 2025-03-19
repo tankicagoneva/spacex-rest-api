@@ -1,6 +1,6 @@
 import express from "express"
 import dotenv from "dotenv"
-import { router as launchpadRouter } from "../routes/launchpads.ts"
+import { router as launchpadRouter } from "../routes/launchpads"
 import { swaggerServe, swaggerDocs } from "../swagger/swagger.ts"
 import serverless from "serverless-http"
 
