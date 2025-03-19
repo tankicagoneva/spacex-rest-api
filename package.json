@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node dist/server/index.js",
     "dev": "nodemon",
-    "build": "esbuild --bundle ./src/server/index.ts --platform=node",
+    "build": "esbuild --bundle ./netlify/functions/api.ts --platform=node --outfile=dist/index.js",
     "format": "prettier --write .",
     "serve": "node dist/server/index.js",
     "test": "vitest",
