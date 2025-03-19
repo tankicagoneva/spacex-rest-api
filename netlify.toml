@@ -4,7 +4,7 @@
 
 [functions]
   external_node_modules = ["express"]
-  node_bundler = "esbuild"
+  node_bundler = "tsc"
 
 [[redirects]]
   from = "/api/*"
@@ -13,5 +13,5 @@
 
 [[redirects]]
   from = "/api-docs"
-  to = "/.netlify/functions/api/api-docs"
+  to = "/.netlify/functions/api/:splat"
   status = 200
