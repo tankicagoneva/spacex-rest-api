@@ -7,8 +7,8 @@ import {
   updateLaunchpad,
   deleteLaunchpad,
   getLaunchpadsByClosest,
-} from "../controllers/launchpadController.ts";
-import { validateRequest } from "../middleware/validateRequest.ts";
+} from "../controllers/launchpadController.js";
+import { validateRequest } from "../middleware/validateRequest.js";
 import { createLaunchpadsSchema, updateLaunchpadsSchema, getLaunchpadsByIdSchema } from "../validators/launchpadsValidators.ts";
 
 export const router = express.Router();

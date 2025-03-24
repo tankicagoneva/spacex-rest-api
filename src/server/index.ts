@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import { router as launchpadRouter } from "../routes/launchpads.ts";
+import { router as launchpadRouter } from "../routes/launchpads.js";
 import { swaggerServe, swaggerDocs } from "../swagger/swagger.ts";
 import serverless from "serverless-http";
 
@@ -9,7 +9,6 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const api = express.Router();
 
 
 // middleware
@@ -17,8 +16,6 @@ app.use(express.json());
 
 app.use("/api-docs", swaggerServe, swaggerDocs);
 
-// Routes
-app.use("/.netlify/functions/api/launchpads", launchpadRouter);
 // For local direct access and redirected access
 app.use("/api/launchpads", launchpadRouter);
 // PORT

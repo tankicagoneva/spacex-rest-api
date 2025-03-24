@@ -1,6 +1,6 @@
 import { RequestHandler, Request, Response, NextFunction } from "express";
-import * as launchpadService from "../services/launchpadService.ts";
-import { getAllLaunchpadsSchema, getClosestSchema } from "../schema/launchpadSchemas.ts";
+import * as launchpadService from "../services/launchpadService";
+import { getAllLaunchpadsSchema, getClosestSchema } from "../schema/launchpadSchemas";
 
 /**
  * Retrieves all launchpads and sends them in the response.
