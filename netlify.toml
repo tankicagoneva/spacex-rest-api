@@ -2,6 +2,10 @@
   command = "npm run build"
   functions = "netlify/functions"
 
+[build]
+  command = "cp src/docs/api-doc.yaml ./dist/"
+  publish = "dist"
+
 [functions]
   external_node_modules = ["express"]
   node_bundler = "esbuild"
