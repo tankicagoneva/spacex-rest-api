@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build"
+  command = "npm run seed && npm run build"
   functions = "netlify/functions"
 
 [build]
@@ -12,10 +12,5 @@
 
 [[redirects]]
   from = "/api/*"
-  to = "/.netlify/functions/api/:splat"
-  status = 200
-
-[[redirects]]
-  from = "/api-docs"
   to = "/.netlify/functions/api/:splat"
   status = 200
