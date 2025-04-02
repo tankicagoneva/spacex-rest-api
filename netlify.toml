@@ -1,5 +1,5 @@
 [build]
-  command = "copy-docs && npm run build"
+  command = "npm run copy-docs && npm run build"
   functions = "netlify/functions"
 
 [functions]
