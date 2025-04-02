@@ -10,7 +10,7 @@
   included_files = ["docs/api-doc.yaml"]
 
   [functions."docs"]
-  included_files = ["docs/docs/docs.html"]
+  included_files = ["docs/docs.html"]
 
 [[redirects]]
   from = "/api/*"
