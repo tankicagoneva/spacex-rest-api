@@ -9,7 +9,15 @@
 [functions."api"]
   included_files = ["docs/api-doc.yaml"]
 
+  [functions."docs"]
+  included_files = ["docs/docs/docs.html"]
+
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/api/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/docs"
+  to = "/.netlify/functions/docs"
   status = 200
