@@ -10,7 +10,7 @@
     "start": "node dist/server/index.js",
     "dev": "nodemon",
     "build": "npx prisma generate && npx prisma migrate deploy && esbuild --bundle ./netlify/functions/api.ts --platform=node --outfile=dist/index.js",
-    "copy-docs": "cp src/docs/api-doc.yaml public/docs/api-doc.yaml",
+    "copy-docs": "mkdir -p /public/docs/ && cp /src/docs/api-doc.yaml /public/docs/api-doc.yaml",
     "format": "prettier --write .",
     "serve": "node dist/server/index.js",
     "test": "vitest",
