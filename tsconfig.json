@@ -10,8 +10,10 @@
     "strict": true,
     "skipLibCheck": true,
     "outDir": "./dist",
-    "rootDir": "./src"
+    "rootDir": "./src",
+        "types": ["test/**/*.ts"],
+
   },
-  "include": ["src/**/*", "src/swagger"],
+  "include": ["src/**/*", "src/swagger", "test/**/*.ts"],
   "exclude": ["node_modules"]
 }
