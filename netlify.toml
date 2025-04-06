@@ -1,12 +1,23 @@
 [build]
-  command = "copy-docs && npm run build"
+  command = "npm run build"
   functions = "netlify/functions"
 
 [functions]
   external_node_modules = ["express"]
   node_bundler = "esbuild"
 
+[functions."api"]
+  included_files = ["docs/api-doc.yaml"]
+
+[functions."docs"]
+  included_files = ["docs/index.html"]
+
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/api/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/docs"
+  to = "/.netlify/functions/docs/:splat"
   status = 200
