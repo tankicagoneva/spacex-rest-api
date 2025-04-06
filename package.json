@@ -17,7 +17,8 @@
     "coverage": "vitest run --coverage",
     "seed": "npx prisma db seed",
     "netlify:dev": "netlify dev",
-    "test:e2e": "cucumber-js"
+    "test:e2e:build": "tsc -p test/e2e/tsconfig.json",
+    "test:e2e": "npm run test:e2e:build && cucumber-js test/e2e/src/features"
   },
   "author": "",
   "license": "ISC",
