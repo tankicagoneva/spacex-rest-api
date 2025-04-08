@@ -7,7 +7,7 @@ Feature: Launchpad Management
 
 
   Scenario: Get all launchpads
-    Given I have a request to "/api/launchpads"
+    Given I have a request to "api/launchpads"
     When I send a GET request
     Then the response status code should be 200
     And the response should be a successful response

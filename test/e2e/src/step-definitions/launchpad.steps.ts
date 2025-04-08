@@ -6,7 +6,7 @@ const request = supertest('https://spacex-rest-api.netlify.app/')
 
 
 Given('I have a request to {string}', async function (url: string) {
-    this.url = await request.get(url)
+    this.url = url
 })
 
 When('I send a GET request', async function () {
