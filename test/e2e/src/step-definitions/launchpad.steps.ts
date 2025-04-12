@@ -32,3 +32,73 @@ Then('the response should contain a full list of launchpads', function () {
     })
 });
 
+
+When('I send a POST request to {string} with:', async function (url: string, dataString: string) {
+    try {
+        const data = JSON.parse(dataString);
+        this.data = data;
+        this.response = await request.post(url).send(data);
+    } catch (error) {
+        throw error;
+    }
+});
+
+Then('the response should be a success', function ()  {
+    assert.ok(this.response.status >= 200 && this.response.status < 300);
+})
+
+Then('the response should contain the created launchpad', function () {
+    const launchpad = this.response.body
+    assert.ok(launchpad)
+    assert.ok('id' in launchpad)
+    assert.ok('name' in launchpad)
+});
+
+
+
+Given ('I have a launchpad with ID {string}', async function (id: string) {
+    this.launchpadId = id
+})
+
+When ('I send a GET request to {string}', async function (url: string) {
+    this.response = await request.get(`${url}`)
+})
+
+
+Then ('the response should contain the launchpad with ID {string}', function (id: string) {
+    const launchpad = this.response.body
+    assert.strictEqual(launchpad.id, id)
+    assert.ok('id' in launchpad)
+})
+
+Then ('the response should contain the launchpad name {string}', function (name: string) {
+    const launchpad = this.response.body
+    assert.strictEqual(launchpad.name, name)
+    assert.ok('name' in launchpad)
+})
+
+
+When ('I send a PUT request to {string} with:', async function (url: string, dataString: string) {
+    try {
+        const data = JSON.parse(dataString);
+        this.data = data;
+        this.response = await request.put(`${url}`).send(data);
+    } catch (error) {
+        throw error;
+    }
+});
+
+Then ('the response should contain the updated launchpad with ID {string}', function (id: string)  {
+    const launchpad = this.response.body
+    assert.strictEqual(launchpad.id, id)
+    assert.ok('id' in launchpad)
+});
+
+Then ('the launchpad name should be "Updated Launch Pad"', function () {
+    const launchpad = this.response.body
+    assert.strictEqual(launchpad.name, "Updated Test Pad")
+});
+
+When ('I send a DELETE request to {string}', async function (url: string) {
+    this.response = await request.delete(url)
+})
