@@ -2,7 +2,7 @@ import { When, Then, Given, DataTable } from '@cucumber/cucumber'
 import supertest from 'supertest'
 import assert from 'assert'
 
-const request = supertest('https://spacex-rest-api.netlify.app/')
+const request = supertest('https://development--spacex-rest-api.netlify.app/')
 
 
 Given('I have a request to {string}', async function (url: string) {
