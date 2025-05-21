@@ -4,6 +4,7 @@ import assert from 'assert'
 
 const request = supertest('https://development--spacex-rest-api.netlify.app/')
 
+let launchpadId: null = null  
 
 Given('I have a request to {string}', async function (url: string) {
     this.url = url
@@ -38,6 +39,7 @@ When('I send a POST request to {string} with:', async function (url: string, dat
         const data = JSON.parse(dataString);
         this.data = data;
         this.response = await request.post(url).send(data);
+         launchpadId = data.id  
     } catch (error) {
         throw error;
     }
@@ -94,11 +96,11 @@ Then ('the response should contain the updated launchpad with ID {string}', func
     assert.ok('id' in launchpad)
 });
 
-Then ('the launchpad name should be "Updated Launch Pad"', function () {
+Then ('the launchpad details should be "Updated info"', function () {
     const launchpad = this.response.body
-    assert.strictEqual(launchpad.name, "Updated Test Pad")
+    assert.strictEqual(launchpad.details, "Updated info")
 });
 
 When ('I send a DELETE request to {string}', async function (url: string) {
-    this.response = await request.delete(url)
+    this.response = await request.delete(`api/launchpads/${launchpadId}`)  
 })
