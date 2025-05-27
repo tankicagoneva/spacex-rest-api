@@ -1,10 +1,10 @@
-import { When, Then, Given, DataTable } from '@cucumber/cucumber'
+import { When, Then, Given } from '@cucumber/cucumber'
 import supertest from 'supertest'
 import assert from 'assert'
 
 const request = supertest('https://development--spacex-rest-api.netlify.app/')
 
-let launchpadId: null = null  
+let launchpadId: null | string = null  
 
 Given('I have a request to {string}', async function (url: string) {
     this.url = url
