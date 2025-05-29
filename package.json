@@ -17,7 +17,9 @@
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "seed": "npx prisma db seed",
-    "netlify:dev": "netlify dev"
+    "netlify:dev": "netlify dev",
+    "test:e2e:build": "tsc -p test/e2e/tsconfig.json",
+    "test:e2e": "npm run test:e2e:build && cucumber-js test/e2e/src/features"
   },
   "author": "",
   "license": "ISC",
@@ -42,6 +44,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@cucumber/cucumber": "^11.2.0",
     "@redocly/cli": "^1.34.1",
     "@types/express": "^5.0.1",
     "@types/js-yaml": "^4.0.9",
