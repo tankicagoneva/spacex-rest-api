@@ -1,6 +1,7 @@
 import express from "express"
 import dotenv from "dotenv"
 import { router as launchpadRouter } from "../routes/launchpads.js"
+import { router as launchesRouter } from "../routes/launches.js"
 import { swaggerServe, swaggerDocs } from "../swagger/swagger.ts"
 import serverless from "serverless-http"
 
@@ -18,6 +19,7 @@ app.use("/api/docs", swaggerServe, swaggerDocs)
 
 // For local direct access and redirected access
 app.use("/api/launchpads", launchpadRouter)
+app.use('/api/launches', launchesRouter);
 // PORT
 if (process.env.NODE_ENV !== 'production') {
   const startServer = async () => {
