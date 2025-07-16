@@ -24,3 +24,15 @@ model launchpads {
   images           Json?    @db.Json
   launches         String[]
 }
+
+
+model launches {
+  id               String   @id
+  name             String
+  window           Int?
+  success          Boolean
+  launchpad        String 
+  auto_update      Boolean @default(false)
+  rocket           String[]
+  payloads         String[]
+}
