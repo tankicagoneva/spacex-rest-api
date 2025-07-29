@@ -1,8 +1,10 @@
-import express from "express"
+import express, { NextFunction, Request, Response } from "express"
 import dotenv from "dotenv"
 import { router as launchpadRouter } from "../routes/launchpads.js"
 import { swaggerServe, swaggerDocs } from "../swagger/swagger.ts"
 import serverless from "serverless-http"
+import cookieParser from 'cookie-parser';
+import { clerkMiddleware, getAuth, requireAuth } from '@clerk/express'
 
 
 dotenv.config()
@@ -12,6 +14,8 @@ const PORT = process.env.PORT || 3000
 
 
 // middleware
+app.use(cookieParser());
+app.use(clerkMiddleware())
 app.use(express.json())
 
 app.use("/api/docs", swaggerServe, swaggerDocs)
